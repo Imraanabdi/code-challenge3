@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function retrieveMoviesFromDB() {
         fetch('db.json')
             .then(response => {
-                // I check if the fetch operation was successful.
+                //  check if the fetch operation was successful.
                 if (!response.ok) {
                     throw new Error('Error fetching movies from db.json');
                 }
