@@ -1,12 +1,12 @@
 
-// As the page loads, I wait for the DOM content to be fully loaded.
+// As the page loads,  wait for the DOM content to be fully loaded.
 document.addEventListener('DOMContentLoaded', () => {
-    // I find the list of movies in the HTML with the ID 'films' and store it.
+    //  find the list of movies in the HTML with the ID 'films' and store it.
     const cinemaList = document.getElementById('films');
-    // I initialize an empty array to store movie data.
+    //  initialize an empty array to store movie data.
     let cinemaData = [];
 
-    // I fetch movie data from the database.
+    // fetch movie data from the database.
     function retrieveMoviesFromDB() {
         fetch('db.json')
             .then(response => {
@@ -30,32 +30,32 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // I display the list of movies on the webpage.
+    //  display the list of movies on the webpage.
     function viewMovies() {
         cinemaData.forEach(cinema => {
             // For each movie, I create a list item element.
             const listItem = createMovieItem(cinema);
-            // I append the list item to the movie list on the webpage.
+            //  append the list item to the movie list on the webpage.
             cinemaList.appendChild(listItem);
         });
     }
 
-    // I create a list item element for a movie.
+    //  create a list item element for a movie.
     function createMovieItem(cinema) {
         const listItem = document.createElement('li');
-        // I set the text content of the list item to the title of the movie.
+        //  set the text content of the list item to the title of the movie.
         listItem.textContent = cinema.title;
-        // I add a custom attribute to store the movie's ID.
+        //  add a custom attribute to store the movie's ID.
         listItem.dataset.cinemaId = cinema.id;
-        // I add CSS classes to style the list item.
+        //  add CSS classes to style the list item.
         listItem.classList.add('movie', 'item');
-        // I add a click event listener to show details about the movie when clicked.
+        //  add a click event listener to show details about the movie when clicked.
         listItem.addEventListener('click', () => updateCinemaDetails(cinema.id));
-        // I return the created list item.
+        //  return the created list item.
         return listItem;
     }
 
-    // I update the movie details section when a movie is clicked.
+    //  update the movie details section when a movie is clicked.
     function updateCinemaDetails(cinemaId) {
         const cinema = cinemaData.find(c => c.id === cinemaId);
         if (!cinema) return;
@@ -74,21 +74,21 @@ document.addEventListener('DOMContentLoaded', () => {
         displayCinemaDetails(cinema);
     }
 
-    // I simulate buying a ticket for a movie.
+    //  simulate buying a ticket for a movie.
     function buyTicket(cinema) {
         cinema.tickets_sold++;
         updateTicketCount(cinema.id);
         updateCinemaDetails(cinema.id);
     }
 
-    // I update the displayed number of available tickets for a movie.
+    //  update the displayed number of available tickets for a movie.
     function updateTicketCount(cinemaId) {
         const cinema = cinemaData.find(c => c.id === cinemaId);
         const availableTickets = cinema.capacity - cinema.tickets_sold;
         document.getElementById('ticket-num').textContent = availableTickets;
     }
 
-    // I display details about a movie in the movie details section on the webpage.
+    //  display details about a movie in the movie details section on the webpage.
     function displayCinemaDetails(cinema) {
         document.getElementById('title').textContent = cinema.title;
         document.getElementById('runtime').textContent = `${cinema.runtime} minutes`;
@@ -100,17 +100,17 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTicketCount(cinema.id);
     }
 
-    // I display an error message on the webpage.
+    //  display an error message on the webpage.
     function showError(message) {
         const errorMessage = document.createElement('div');
         errorMessage.textContent = message;
         errorMessage.classList.add('ui', 'negative', 'message');
         document.body.appendChild(errorMessage);
-        // I set a timeout to remove the error message after 5 seconds.
+        //  set a timeout to remove the error message after 5 seconds.
         setTimeout(() => errorMessage.remove(), 5000);
     }
 
-    // I call the function to fetch movie data when the DOM content is fully loaded.
+    //  call the function to fetch movie data when the DOM content is fully loaded.
     retrieveMoviesFromDB();
 });
 
